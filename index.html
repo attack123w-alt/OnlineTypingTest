@@ -53,6 +53,7 @@
             display: flex;
             gap: 15px;
             margin-bottom: 25px;
+            flex-wrap: wrap;
         }
         .stat-box {
             background: var(--card);
@@ -78,9 +79,13 @@
             font-size: 1.3rem;
             line-height: 1.8;
             text-align: left;
-            min-height: 150px;
+            min-height: 250px; /* increased for longer paragraphs */
+            max-height: 400px; /* scroll if too long */
             border: 1px solid #334155;
             user-select: none;
+            overflow-y: auto;
+            word-wrap: break-word;
+            white-space: pre-wrap;
         }
         #input-field {
             width: 100%;
