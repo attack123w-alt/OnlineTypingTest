@@ -1,10 +1,10 @@
 const medicalParagraphs = [
-  "The patient is a sixty-two-year-old male presenting with acute onset of substernal chest pain radiating to the left arm.",
-  "Physical examination showed a well-developed female in no apparent distress.",
-  "Post-operative diagnosis was chronic cholecystitis with cholelithiasis.",
-  "Respiratory assessment showed bilateral wheezing and decreased breath sounds.",
-  "Neurological findings were significant for mild left-sided hemiparesis.",
-  "The patient was prescribed amlodipine and atorvastatin."
+  "The patient is a sixty-two-year-old male presenting with acute onset of substernal chest pain radiating to the left arm. An electrocardiogram revealed ST-segment elevation in the anterior leads, suggestive of an acute myocardial infarction.",
+  "Physical examination showed a well-developed female in no apparent distress. The abdomen was soft and non-tender with no organomegaly or masses noted. Laboratory results indicate a white blood cell count of twelve thousand per microliter.",
+  "Post-operative Diagnosis: Chronic cholecystitis with cholelithiasis. Procedure: Laparoscopic cholecystectomy. The patient was placed in the supine position and general anesthesia was induced without complications.",
+  "Respiratory assessment showed bilateral wheezing and decreased breath sounds in the lower lobes. The patient was started on a nebulizer treatment of albuterol and ipratropium bromide to manage the acute exacerbation of asthma.",
+  "Neurological findings were significant for a mild left-sided hemiparesis. A CT scan of the head showed a small area of hypodensity in the right parietal lobe, consistent with a recent ischemic cerebrovascular accident.",
+  "The patient was prescribed five milligrams of amlodipine daily for hypertension and twenty milligrams of atorvastatin for hypercholesterolemia. Follow-up is scheduled in two weeks for a metabolic panel and blood pressure check."
 ];
 
 let timeLeft = 60;
@@ -24,8 +24,14 @@ let highScore = localStorage.getItem("medscribeHigh") || 0;
 highScoreEl.textContent = highScore;
 
 function init() {
-  const text = medicalParagraphs[Math.floor(Math.random() * medicalParagraphs.length)];
+  // Pick a random paragraph
+  let text = medicalParagraphs[Math.floor(Math.random() * medicalParagraphs.length)];
+  // Remove invisible characters
+  text = text.replace(/\uFEFF/g, "");
+
+  // Display each character in a <span>
   display.innerHTML = text.split("").map(c => `<span>${c}</span>`).join("");
+
   input.value = "";
   input.disabled = false;
   started = false;
@@ -35,6 +41,8 @@ function init() {
   mistakeEl.textContent = "0";
   wpmEl.textContent = "0";
   clearInterval(timer);
+
+  input.scrollIntoView({behavior: "smooth"});
   input.focus();
 }
 
