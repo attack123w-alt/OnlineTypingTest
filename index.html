@@ -1,140 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medscribe - Professional Transcription Trainer</title>
+<meta charset="UTF-8" />
+<title>Medical Typing Practice</title>
 
-    <!-- Security Headers -->
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="Content-Security-Policy"
-      content="
-        default-src 'self';
-        script-src 'self' https://www.googletagmanager.com;
-        style-src 'self' 'unsafe-inline';
-        img-src 'self' data:;
-        connect-src https://www.google-analytics.com;
-      ">
+<!-- SECURITY HEADERS -->
+<meta http-equiv="Content-Security-Policy"
+content="
+default-src 'self';
+script-src 'self' https://www.googletagmanager.com;
+style-src 'self' 'unsafe-inline';
+media-src 'self';
+connect-src https://www.google-analytics.com;
+">
 
-    <!-- Google Analytics GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMWDNVD3DN"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-FMWDNVD3DN');
-    </script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        :root {
-            --bg: #0f172a;
-            --text: #f8fafc;
-            --accent: #38bdf8;
-            --correct: #4ade80;
-            --wrong: #f87171;
-            --card: #1e293b;
-        }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            width: 90%;
-            max-width: 900px;
-            text-align: center;
-        }
-        .header-stats {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-        .stat-box {
-            background: var(--card);
-            padding: 15px;
-            border-radius: 12px;
-            flex: 1;
-            border: 1px solid #334155;
-        }
-        .stat-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--accent);
-            font-weight: bold;
-        }
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
-        #text-display {
-            background: var(--card);
-            padding: 30px;
-            border-radius: 15px;
-            font-size: 1.3rem;
-            line-height: 1.8;
-            text-align: left;
-            min-height: 250px; /* increased for longer paragraphs */
-            max-height: 400px; /* scroll if too long */
-            border: 1px solid #334155;
-            user-select: none;
-            overflow-y: auto;
-            word-wrap: break-word;
-            white-space: pre-wrap;
-        }
-        #input-field {
-            width: 100%;
-            padding: 20px;
-            font-size: 1.2rem;
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 10px;
-            color: white;
-            margin-top: 15px;
-        }
-        .correct { color: var(--correct); }
-        .incorrect { color: var(--wrong); border-bottom: 2px solid var(--wrong); }
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXX');
+</script>
 
-        .controls {
-            margin-top: 20px;
-        }
-        button {
-            padding: 12px 30px;
-            background: var(--accent);
-            color: #0f172a;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+<style>
+body { font-family: Arial, sans-serif; background:#f5f7fa; padding:20px }
+.container { max-width:900px; margin:auto }
+#text-display { background:#fff; padding:15px; min-height:200px; border-radius:6px; overflow-y:auto; white-space:pre-wrap }
+.correct { color:green }
+.incorrect { color:red }
+input, select, button { padding:8px; margin:5px }
+.stats span { margin-right:15px }
+</style>
 </head>
 
 <body>
 <div class="container">
-    <h2 style="color: var(--accent);">Medical Transcription Speed Lab</h2>
+<h2>Medical Transcription Typing Practice</h2>
 
-    <div class="header-stats">
-        <div class="stat-box"><div class="stat-label">Timer</div><div class="stat-value" id="timer">60s</div></div>
-        <div class="stat-box"><div class="stat-label">Mistakes</div><div class="stat-value" id="mistake-count">0</div></div>
-        <div class="stat-box"><div class="stat-label">Live WPM</div><div class="stat-value" id="current-wpm">0</div></div>
-        <div class="stat-box"><div class="stat-label">Best WPM</div><div class="stat-value" id="high-score">0</div></div>
-    </div>
+<!-- SETTINGS -->
+<select id="time-mode">
+  <option value="180">3 Minutes</option>
+  <option value="300">5 Minutes</option>
+  <option value="600">10 Minutes</option>
+</select>
 
-    <div id="text-display"></div>
-    <input id="input-field" type="text" placeholder="Type the medical report above…" autocomplete="off">
+<select id="difficulty">
+  <option value="basic">Basic</option>
+  <option value="intermediate">Intermediate</option>
+  <option value="advanced">Advanced</option>
+</select>
 
-    <div class="controls">
-        <button id="reset-btn">Next Medical Report</button>
-    </div>
+<button id="play-audio">▶ Audio Dictation</button>
+<button id="reset-btn">Reset</button>
+
+<div id="text-display"></div>
+
+<input id="input-field" placeholder="Start typing here..." autocomplete="off" />
+
+<div class="stats">
+  <span>Time: <strong id="timer">0</strong></span>
+  <span>Mistakes: <strong id="mistake-count">0</strong></span>
+  <span>WPM: <strong id="current-wpm">0</strong></span>
+  <span>Accuracy: <strong id="accuracy">100%</strong></span>
 </div>
 
-<!-- App Logic -->
+<h3>🏆 Today’s Best WPM: <span id="leaderboard">0</span></h3>
+</div>
+
 <script src="app.js" defer></script>
 </body>
 </html>
