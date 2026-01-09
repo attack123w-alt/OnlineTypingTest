@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <title>Medical Typing Practice</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- SECURITY HEADERS -->
+<!-- SECURITY -->
 <meta http-equiv="Content-Security-Policy"
 content="
 default-src 'self';
@@ -14,63 +15,203 @@ media-src 'self';
 connect-src https://www.google-analytics.com;
 ">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMWDNVD3DN"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-FMWDNVD3DIV');
-</script>
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body { font-family: Arial, sans-serif; background:#f5f7fa; padding:20px }
-.container { max-width:900px; margin:auto }
-#text-display { background:#fff; padding:15px; min-height:200px; border-radius:6px; overflow-y:auto; white-space:pre-wrap }
-.correct { color:green }
-.incorrect { color:red }
-input, select, button { padding:8px; margin:5px }
-.stats span { margin-right:15px }
+:root {
+  --primary: #6a5cff;
+  --secondary: #22d3ee;
+  --accent: #fbbf24;
+  --bg1: #0f172a;
+  --bg2: #020617;
+  --card: rgba(255,255,255,0.08);
+  --text: #e5e7eb;
+  --success: #22c55e;
+  --error: #ef4444;
+}
+
+* { box-sizing: border-box }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+}
+
+/* MAIN CARD */
+.container {
+  width: 95%;
+  max-width: 1000px;
+  background: var(--card);
+  backdrop-filter: blur(18px);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  animation: fadeIn 1s ease;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 20px;
+}
+
+/* CONTROLS */
+.controls-top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+select, button {
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  border-radius: 14px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+select {
+  background: rgba(255,255,255,0.15);
+  color: white;
+}
+
+button {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #020617;
+  box-shadow: 0 8px 20px rgba(0,0,0,.4);
+}
+
+button:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 15px 35px rgba(0,0,0,.6);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* TEXT DISPLAY */
+#text-display {
+  background: rgba(255,255,255,0.06);
+  border-radius: 18px;
+  padding: 25px;
+  min-height: 260px;
+  max-height: 420px;
+  overflow-y: auto;
+  font-size: 1.15rem;
+  line-height: 1.9;
+  border: 1px solid rgba(255,255,255,0.15);
+  animation: slideUp .8s ease;
+}
+
+/* INPUT */
+#input-field {
+  width: 100%;
+  margin-top: 15px;
+  padding: 18px;
+  font-size: 1.1rem;
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.35);
+  color: white;
+}
+
+#input-field:focus {
+  outline: none;
+  border-color: var(--secondary);
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 18px;
+  font-weight: 600;
+}
+
+.stats span {
+  background: rgba(255,255,255,0.08);
+  padding: 10px 16px;
+  border-radius: 12px;
+}
+
+/* LEADERBOARD */
+.leaderboard {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+/* TYPING COLORS */
+.correct { color: var(--success) }
+.incorrect { color: var(--error); text-decoration: underline }
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(.95) }
+  to { opacity: 1; transform: scale(1) }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) }
+  to { opacity: 1; transform: translateY(0) }
+}
 </style>
 </head>
 
 <body>
+
 <div class="container">
-<h2>Medical Transcription Typing Practice</h2>
+  <h2>🩺 Medical Transcription Typing Practice</h2>
 
-<!-- SETTINGS -->
-<select id="time-mode">
-  <option value="180">3 Minutes</option>
-  <option value="300">5 Minutes</option>
-  <option value="600">10 Minutes</option>
-</select>
+  <div class="controls-top">
+    <select id="time-mode">
+      <option value="180">⏱️ 3 Minutes</option>
+      <option value="300">⏱️ 5 Minutes</option>
+      <option value="600">⏱️ 10 Minutes</option>
+    </select>
 
-<select id="difficulty">
-  <option value="basic">Basic</option>
-  <option value="intermediate">Intermediate</option>
-  <option value="advanced">Advanced</option>
-</select>
+    <select id="difficulty">
+      <option value="basic">🟢 Basic</option>
+      <option value="intermediate">🟡 Intermediate</option>
+      <option value="advanced">🔴 Advanced</option>
+    </select>
 
-<button id="play-audio">▶ Audio Dictation</button>
-<button id="reset-btn">Reset</button>
+    <button id="play-audio">🎧 Audio Dictation</button>
+    <button id="reset-btn">🔄 New Report</button>
+  </div>
 
-<div id="text-display"></div>
+  <div id="text-display"></div>
 
-<input id="input-field" placeholder="Start typing here..." autocomplete="off" />
+  <input id="input-field" placeholder="⌨️ Start typing here..." autocomplete="off" />
 
-<div class="stats">
-  <span>Time: <strong id="timer">0</strong></span>
-  <span>Mistakes: <strong id="mistake-count">0</strong></span>
-  <span>WPM: <strong id="current-wpm">0</strong></span>
-  <span>Accuracy: <strong id="accuracy">100%</strong></span>
-</div>
+  <div class="stats">
+    <span>⏳ Time: <b id="timer">0</b></span>
+    <span>❌ Mistakes: <b id="mistake-count">0</b></span>
+    <span>⚡ WPM: <b id="current-wpm">0</b></span>
+    <span>🎯 Accuracy: <b id="accuracy">100%</b></span>
+  </div>
 
-<h3>🏆 Today’s Best WPM: <span id="leaderboard">0</span></h3>
+  <div class="leaderboard">
+    🏆 Today’s Best WPM: <b id="leaderboard">0</b>
+  </div>
 </div>
 
 <script src="app.js" defer></script>
 </body>
 </html>
-
