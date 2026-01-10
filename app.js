@@ -20,7 +20,7 @@ const medicalReports = [
 /* ===============================
    STATE
 ================================ */
-let timeLeft = 180;
+let timeLeft = 60;
 let timer = null;
 let started = false;
 let mistakes = 0;
@@ -97,7 +97,7 @@ input.addEventListener("input", () => {
 
   mistakeEl.textContent = mistakes;
 
-  const elapsed = (180 - timeLeft) / 60;
+  const elapsed = (60 - timeLeft) / 60;
   if (elapsed > 0) {
     const wpm = Math.round((correct / 5) / elapsed);
     wpmEl.textContent = wpm;
@@ -125,7 +125,7 @@ function endTest() {
    RESET
 ================================ */
 resetBtn.addEventListener("click", () => {
-  timeLeft = 180;
+  timeLeft = 60;
   loadReport();
 });
 
